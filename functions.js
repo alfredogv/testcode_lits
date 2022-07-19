@@ -1,45 +1,69 @@
+/**
+ * AGV
+ * functions
+ */
+
 $(document).ready(()=>{
     $('#start').click(()=>{
         $.getJSON('data.json', (el)=>{
             eachElements(el.address, el.drivers);
-            // eachElementsAddress(el.address);
-            // eachElementsDrivers(el.drivers);
         });
     });
 });
 
+
+
 function eachElements(addressArr, driversArr){
+    let maxSS;
     let ss;
-    let assignRoutes = [];
-    $.each(driversArr, (i, driverElement)=>{
-        console.log(i, driverElement);
+    let assignRoutes   = [];
+    
+    $.each(driversArr, (i, conductorElement)=>{
+        let arrayTempSS = [];
         
-        let longitudNombreConductor = getLongitud(driverElement.driver);
-        let conductorVocales = getVocales(driverElement);
-        let consuctorConsonantes = getConsonantes(driverElement);
+        console.log(i, conductorElement);
 
-        $.each(addressArr, (j, addressElement) => {
-            let longitudNombreCalle = getLongitud(addressElement.street);
-            //console.log(j+' long street: '+longitudNombreCalle);      
-            let addressPar = isPar(longitudNombreCalle);
-            //console.log('longitud calle es par: '+addressPar);
+        let longitudNombreConductor = getLongitud(conductorElement.driver);
+        let conductorVocales        = getVocales(conductorElement);
+        let conductorConsonantes    = getConsonantes(conductorElement);
+
+        
+        
+        var condcutorAsignadoTemp;
+        var direccionAsignadaTemp;
+        
+
+        $.each(addressArr, (j, direccionElement) => {
+            let longitudNombreCalle = getLongitud(direccionElement.street);
+            let addressPar          = isPar(longitudNombreCalle);
             
-            if(longitudNombreCalle == longitudNombreConductor) addressPar = 2;
-            
-            switch(addressPar){
-                case 2:
-                    ss = conductorVocales * 2.25;
-                case 1:
-                    ss = conductorVocales * 1.5;
-                    break;
-                case 0:
-                    ss = consuctorConsonantes * 1;
-                    break;
+            if(addressPar == 1){ //par
+                ss = conductorVocales * 1.5;
+                arrayTempSS.push(ss);
+                
             }
-            console.log('ss, par :' + ss);
 
+            if(addressPar == 0){ //impar
+                ss = conductorConsonantes * 1;
+                arrayTempSS.push(ss);
+                
+            }
+
+            if(longitudNombreCalle == longitudNombreConductor){
+                ss = conductorVocales * 2.25;
+                arrayTempSS.push(ss);
+            }
+            console.log('arrayTempSS: '+arrayTempSS);
+            
         });
 
+        arrayTempSS = [...new Set(arrayTempSS)];
+        arrayTempSS = Math.max(...arrayTempSS);
+        maxSS = arrayTempSS;
+        
+        //console.log('consuctor: ' + conductorElement.driver);
+        // assignRoutes.push({"conductor":conductorElement.driver,"direccion":direccionAsignadaTemp});
+        // direccionAsignadaTemp = [];
     });
 }
 
@@ -49,7 +73,7 @@ function getLongitud(element){
 
 function isPar(long){
     if(long%2 == 0) return 1;
-    return 0;
+    else return 0;
 }
 
 function getVocales(element){
