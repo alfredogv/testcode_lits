@@ -39,7 +39,7 @@ function eachElements(addressArr, driversArr){
             
             if(addressPar == 1){ //par
                 ss = conductorVocales * 1.5;
-                arrayTempSS.push(ss);
+                arrayTempSS.push(ss); //save to arr temp
                 
             }
 

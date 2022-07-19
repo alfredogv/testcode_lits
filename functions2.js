@@ -1,30 +1,43 @@
+/**
+ * AGV
+ * funciones v2
+ */
+
 $(document).ready(()=>{
     $('#start').click(()=>{
         init();
     });
 });
 
+// init main func
 function init(){
     const conductoresArray = ["James Lewis","Paul Gutierrez","Jack Brown","Amy Jones","Linda Henderson","Mitchell Huynh","Jacqueline Sandoval","Brandon Marshall","Albert Smith","Abigail Castillo DDS"];
     const callesArray = ["Lane","Skips Lane","Cantebury Drive","Michael Street","Deer Haven Drive","Strother Street","Hillhaven Drive","Sampson Street","Oliver Street","Hamilton Drive"];
-    const arrayFinal = [];
-    const arraySS = [];
+    const arrayFinal = []; // array to save final result
+    const arraySS = []; // array to save all ss
     
+    //cicle to main conductores
     $.each(conductoresArray, (i,conductor)=>{
         console.log('-- conductor: '+conductor);
+
+        // cicle to calles array
         $.each(callesArray, (j, calle)=>{
             console.log(' calle: '+calle);
+            // vars to save each fields
             let longitudCalle = getLongitud(calle);
             let longitudNombreConductor = getLongitud(conductor);
             let longitudCallePar = isPar(longitudCalle);
             let numVocalesConductor = getVocales(conductor);
             let numConsonantesConductor = getConsonantes(conductor);
+
+            //debug
             console.log(' longitud calle: '+longitudCalle);
             console.log(' longitud conductor: '+longitudNombreConductor);
             console.log(' calle par: '+longitudCallePar);
             console.log(' num vocales conductor: '+numVocalesConductor);
             console.log(' num consonantes conductor: '+numConsonantesConductor);
             
+            //first case
             if(longitudCallePar == 1){
                 if(longitudCalle === longitudNombreConductor){
                     ss = (getVocales(conductor) * 1.5) * .50;
@@ -32,7 +45,9 @@ function init(){
                     arrayFinal.push({'conductor':conductor});
                     console.log('  ss coincide longitues: '+ss);
                 }
-                else ss = getVocales(conductor) * 1.5;
+                else{
+                    ss = getVocales(conductor) * 1.5;
+                }
                 
             }
             else{
