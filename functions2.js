@@ -11,6 +11,7 @@ $(document).ready(()=>{
 
 // init main func
 function init(){
+    // init data
     const conductoresArray = ["James Lewis","Paul Gutierrez","Jack Brown","Amy Jones","Linda Henderson","Mitchell Huynh","Jacqueline Sandoval","Brandon Marshall","Albert Smith","Abigail Castillo DDS"];
     const callesArray = ["Lane","Skips Lane","Cantebury Drive","Michael Street","Deer Haven Drive","Strother Street","Hillhaven Drive","Sampson Street","Oliver Street","Hamilton Drive"];
     const arrayFinal = []; // array to save final result
